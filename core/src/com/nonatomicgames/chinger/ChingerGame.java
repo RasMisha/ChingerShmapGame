@@ -1,32 +1,17 @@
 package com.nonatomicgames.chinger;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nonatomicgames.chinger.screens.GameScreen;
 
-public class ChingerGame extends ApplicationAdapter {
-
-    SpriteBatch batch;
-    Level currentLevel;
-    FPSLogger fpsLogger;
+public class ChingerGame extends Game {
 
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
+        SpriteBatch batcher = new SpriteBatch();
         Assets.loadGfx();
-        currentLevel = new Level(this, batch, 1);
 
-        fpsLogger = new FPSLogger();
+        setScreen(new GameScreen(this, batcher));
     }
-
-	@Override
-	public void render () {
-        currentLevel.update(Gdx.graphics.getDeltaTime());
-        currentLevel.render();
-
-        fpsLogger.log();
-	}
 
 }
