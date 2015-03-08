@@ -22,6 +22,7 @@ public class Level {
     public void render() {
         batcher.begin();
         batcher.draw(Assets.shipRegion, ship.position.x, ship.position.y);
+        ship.renderShots(batcher);
         batcher.end();
     }
 

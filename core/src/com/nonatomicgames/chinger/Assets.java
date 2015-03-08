@@ -13,7 +13,8 @@ public class Assets {
 
     private static Texture shipTexture;
 
-    public  static TextureRegion shipRegion;
+    public static TextureRegion shipRegion;
+    public static TextureRegion simpleShotRegion;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(RESOURCES_PREFIX + file));
@@ -22,7 +23,9 @@ public class Assets {
     public static void loadGfx() {
 
         shipTexture = loadTexture("ship_sheet.png");
+
         shipRegion = new TextureRegion(shipTexture,5, 6, 36-5, 21-6);
+        simpleShotRegion = new TextureRegion(shipTexture, 268, 121, 283 - 268, 124 - 121);
 
     }
 

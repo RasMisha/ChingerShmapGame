@@ -2,6 +2,7 @@ package com.nonatomicgames.chinger;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -20,6 +21,7 @@ public class Ship {
     private Vector2 velocity = new Vector2();
 
     private int currentDirection;
+    private Shot[] currentShots;
 
     private float time = 0f;
 
@@ -34,6 +36,11 @@ public class Ship {
 
         this.velocity.x = 0;
         this.velocity.y = 0;
+
+        currentShots = new Shot[5];
+        for (int i = 0; i < SimpleShot.MAXIMUM_SHOTS_ON_SCREEN; i++) {
+            currentShots[i] = new SimpleShot(-100, -100);
+        }
     }
 
     public void update(float delta) {
@@ -59,6 +66,26 @@ public class Ship {
             this.velocity.y = 3;
         }
 
+        for (Shot shot : currentShots) {
+            if (shot.onScreen()) {
+                shot.update(delta);
+            }
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            Shot shotForShoot = null;
+            for (Shot shot : currentShots) {
+                if (!shot.onScreen()) {
+                    shotForShoot = shot;
+                    break;
+                }
+            }
+
+            if (shotForShoot != null) {
+                shotForShoot.shoot(this.position.x, this.position.y);
+            }
+        }
+
         time += delta;
         if (time > speedTickValues[currentSpeed]) {
             time -= speedTickValues[currentSpeed];
@@ -66,4 +93,11 @@ public class Ship {
         }
     }
 
+    public void renderShots(SpriteBatch batcher) {
+        for (Shot shot : currentShots) {
+            if (shot.onScreen()) {
+                shot.render(batcher);
+            }
+        }
+    }
 }
