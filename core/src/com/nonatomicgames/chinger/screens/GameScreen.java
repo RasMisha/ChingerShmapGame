@@ -19,6 +19,7 @@ public class GameScreen implements Screen {
     private Level currentLevel;
     private FPSLogger fpsLogger;
     private SpriteBatch batcher;
+
     private OrthographicCamera orthographicCamera;
 
     public GameScreen(ChingerGame game, SpriteBatch batcher) {
@@ -40,6 +41,9 @@ public class GameScreen implements Screen {
     }
 
     public void render(float delta) {
+
+//        orthographicCamera.position.x += 1;
+
         currentLevel.update(delta);
 
         orthographicCamera.update();

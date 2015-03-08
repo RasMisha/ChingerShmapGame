@@ -25,7 +25,7 @@ public class Assets {
         shipTexture = loadTexture("ship_sheet.png");
 
         shipRegion = new TextureRegion(shipTexture,5, 6, 36-5, 21-6);
-        simpleShotRegion = new TextureRegion(shipTexture, 268, 121, 283 - 268, 124 - 121);
+        simpleShotRegion = new TextureRegion(shipTexture, 268, 121, 284 - 268, 125 - 121);
 
     }
 

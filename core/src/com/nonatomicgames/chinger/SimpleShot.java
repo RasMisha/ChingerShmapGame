@@ -8,8 +8,6 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class SimpleShot implements Shot {
 
-    public static final int MAXIMUM_SHOTS_ON_SCREEN = 5;
-
     private static final int VELOCITY = 5;
     private static final float UPDATING_TIME = 0.02f;
 

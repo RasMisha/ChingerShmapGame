@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.LinkedList;
+
 /**
  * Created by MandM on 05.03.2015.
  */
@@ -22,11 +24,12 @@ public class Ship {
 
     private int currentDirection;
     private Shot[] currentShots;
+    private LinkedList<Shot> shots = new LinkedList<Shot>();
 
     private float time = 0f;
 
-    public int currentSpeed = 3;
-    public float[] speedTickValues = new float[] {0.06f,0.05f,0.04f,0.03f};
+    public int currentSpeed = 2;
+    public float[] speedTickValues = new float[]{0.03f, 0.025f, 0.02f};
 
     public Rectangle bounds = new Rectangle();
 
@@ -37,9 +40,9 @@ public class Ship {
         this.velocity.x = 0;
         this.velocity.y = 0;
 
-        currentShots = new Shot[5];
-        for (int i = 0; i < SimpleShot.MAXIMUM_SHOTS_ON_SCREEN; i++) {
-            currentShots[i] = new SimpleShot(-100, -100);
+        currentShots = new Shot[Shot.MAXIMUM_SHOTS_ON_SCREEN];
+        for (int i = 0; i < Shot.MAXIMUM_SHOTS_ON_SCREEN; i++) {
+            currentShots[i] = new SpreadShot();
         }
     }
 
@@ -50,20 +53,20 @@ public class Ship {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             currentDirection = LEFT_DIRECTION;
-            this.velocity.x = -3;
+            this.velocity.x = -2;
             this.velocity.y = 0;
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             currentDirection = RIGHT_DIRECTION;
-            this.velocity.x = 3;
+            this.velocity.x = 2;
             this.velocity.y = 0;
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             currentDirection = DOWN_DIRECTION;
             this.velocity.x = 0;
-            this.velocity.y = -3;
+            this.velocity.y = -2;
         } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             currentDirection = UP_DIRECTION;
             this.velocity.x = 0;
-            this.velocity.y = 3;
+            this.velocity.y = 2;
         }
 
         for (Shot shot : currentShots) {
