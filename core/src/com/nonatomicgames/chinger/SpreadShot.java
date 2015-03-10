@@ -62,4 +62,9 @@ public class SpreadShot implements Shot {
             batcher.draw(Assets.simpleShotRegion, position.x, position.y);
         }
     }
+
+    @Override
+    public boolean enemyShot() {
+        return false;
+    }
 }

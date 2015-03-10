@@ -16,4 +16,6 @@ public interface Shot {
     public void update(float delta);
 
     public void render(SpriteBatch batcher);
+
+    public boolean enemyShot();
 }

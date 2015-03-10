@@ -51,4 +51,9 @@ public class SimpleShot implements Shot {
         batcher.draw(Assets.simpleShotRegion, this.position.x, this.position.y);
     }
 
+    @Override
+    public boolean enemyShot() {
+        return false;
+    }
+
 }

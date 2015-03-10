@@ -73,4 +73,9 @@ public class HomingShot implements Shot {
                 false
         );
     }
+
+    @Override
+    public boolean enemyShot() {
+        return false;
+    }
 }
