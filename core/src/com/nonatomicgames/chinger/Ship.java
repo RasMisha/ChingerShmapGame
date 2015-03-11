@@ -7,11 +7,15 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * Created by MandM on 05.03.2015.
  */
 public class Ship {
+
+    public static final float SHOT_PAUSE = 0.1f;
+    public static final Random rnd = new Random();
 
     public static final int LEFT_DIRECTION = 0;
     public static final int RIGHT_DIRECTION = 1;
@@ -22,9 +26,11 @@ public class Ship {
 
     private Vector2 velocity = new Vector2();
 
+    private float timeFromLastShot = 0f;
+
     private int currentDirection;
     private Shot[] currentShots;
-    private LinkedList<Shot> shots = new LinkedList<Shot>();
+    public LinkedList<Shot> shots = new LinkedList<Shot>();
 
     private float time = 0f;
 
@@ -40,16 +46,14 @@ public class Ship {
         this.velocity.x = 0;
         this.velocity.y = 0;
 
-        currentShots = new Shot[Shot.MAXIMUM_SHOTS_ON_SCREEN];
-        for (int i = 0; i < Shot.MAXIMUM_SHOTS_ON_SCREEN; i++) {
-            currentShots[i] = new SpreadShot();
-        }
+        this.timeFromLastShot = 0f;
     }
 
     public void update(float delta) {
 
         this.velocity.x = 0;
         this.velocity.y = 0;
+        this.timeFromLastShot += delta;
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             currentDirection = LEFT_DIRECTION;
@@ -69,24 +73,27 @@ public class Ship {
             this.velocity.y = 2;
         }
 
-        for (Shot shot : currentShots) {
+        for (int shotIndex = shots.size() - 1; shotIndex >= 0; shotIndex--) {
+            Shot shot = shots.get(shotIndex);
             if (shot.onScreen()) {
                 shot.update(delta);
+            } else {
+                shots.remove(shotIndex);
             }
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            Shot shotForShoot = null;
-            for (Shot shot : currentShots) {
-                if (!shot.onScreen()) {
-                    shotForShoot = shot;
-                    break;
-                }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && timeFromLastShot >= SHOT_PAUSE) {
+            Shot nextShot = null;
+            if (rnd.nextBoolean()) {
+                nextShot = new SpreadShot();
+            } else {
+                nextShot = new SimpleShot();
             }
 
-            if (shotForShoot != null) {
-                shotForShoot.shoot(this.position.x, this.position.y);
-            }
+            nextShot.shoot(this.position.x + 24, this.position.y + 12);
+            this.timeFromLastShot = 0f;
+            this.shots.add(nextShot);
         }
 
         time += delta;
@@ -97,7 +104,7 @@ public class Ship {
     }
 
     public void renderShots(SpriteBatch batcher) {
-        for (Shot shot : currentShots) {
+        for (Shot shot : shots) {
             if (shot.onScreen()) {
                 shot.render(batcher);
             }

@@ -16,6 +16,7 @@ public class Assets {
 
     public static TextureRegion shipRegion;
     public static TextureRegion simpleShotRegion;
+    public static TextureRegion enemyRegion;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(RESOURCES_PREFIX + file));
@@ -28,7 +29,8 @@ public class Assets {
 
         shipRegion = new TextureRegion(shipTexture, 0, 0, 24, 24);
         simpleShotRegion = new TextureRegion(bulletTexure, 0, 0, 4, 4);
-
+        enemyRegion = new TextureRegion(shipTexture, 0, 0, 24, 24);
+        enemyRegion.flip(true, false);
 
     }
 

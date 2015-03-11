@@ -14,6 +14,8 @@ public class SimpleShot implements Shot {
     public boolean wasShoted = false;
 
     public Vector2 position = new Vector2();
+    public Vector2 delta = new Vector2();
+
     private float lifeTime = 0f;
 
 
