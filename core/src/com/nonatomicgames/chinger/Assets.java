@@ -12,6 +12,7 @@ public class Assets {
     private static final String RESOURCES_PREFIX = "assets/";
 
     private static Texture shipTexture;
+    private static Texture bulletTexure;
 
     public static TextureRegion shipRegion;
     public static TextureRegion simpleShotRegion;
@@ -22,10 +23,12 @@ public class Assets {
 
     public static void loadGfx() {
 
-        shipTexture = loadTexture("ship_sheet.png");
+        shipTexture = loadTexture("ship.png");
+        bulletTexure = loadTexture("bullet.png");
 
-        shipRegion = new TextureRegion(shipTexture,5, 6, 36-5, 21-6);
-        simpleShotRegion = new TextureRegion(shipTexture, 268, 121, 284 - 268, 125 - 121);
+        shipRegion = new TextureRegion(shipTexture, 0, 0, 24, 24);
+        simpleShotRegion = new TextureRegion(bulletTexure, 0, 0, 4, 4);
+
 
     }
 

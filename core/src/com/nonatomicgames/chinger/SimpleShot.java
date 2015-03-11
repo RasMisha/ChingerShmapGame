@@ -11,12 +11,14 @@ public class SimpleShot implements Shot {
     private static final int VELOCITY = 5;
     private static final float UPDATING_TIME = 0.02f;
 
-    private Vector2 position = new Vector2();
+    public boolean wasShoted = false;
+
+    public Vector2 position = new Vector2();
     private float lifeTime = 0f;
 
-    public SimpleShot(float spawnX, float spawnY) {
-        this.position.x = spawnX;
-        this.position.y = spawnY;
+
+    public SimpleShot() {
+        wasShoted = false;
     }
 
 
@@ -25,16 +27,24 @@ public class SimpleShot implements Shot {
         this.position.x = spawnX;
         this.position.y = spawnY;
         this.lifeTime = 0f;
+        this.wasShoted = true;
     }
 
     @Override
     public boolean onScreen() {
-        return (
-                this.position.x > 0
-                        && this.position.y > 0
-                        && this.position.x < Constants.WORLD_WIDTH
-                        && this.position.y < Constants.WORLD_HEIGHT
-        );
+        if (wasShoted) {
+            boolean onScreen = this.position.x > 0
+                    && this.position.y > 0
+                    && this.position.x < Constants.WORLD_WIDTH
+                    && this.position.y < Constants.WORLD_HEIGHT;
+            if (!onScreen) {
+                wasShoted = false;
+            }
+            return onScreen;
+
+        }
+        return false;
+
     }
 
     @Override

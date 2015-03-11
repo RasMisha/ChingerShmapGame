@@ -42,7 +42,7 @@ public class Ship {
 
         currentShots = new Shot[Shot.MAXIMUM_SHOTS_ON_SCREEN];
         for (int i = 0; i < Shot.MAXIMUM_SHOTS_ON_SCREEN; i++) {
-            currentShots[i] = new HomingShot();
+            currentShots[i] = new SpreadShot();
         }
     }
 
