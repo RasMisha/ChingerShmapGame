@@ -11,4 +11,6 @@ public interface Enemy {
 
     public void render(SpriteBatch batcher);
 
+    public boolean killed();
+
 }
