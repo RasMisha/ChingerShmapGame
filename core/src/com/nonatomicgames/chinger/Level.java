@@ -19,12 +19,15 @@ public class Level {
     private SpriteBatch batcher;
 
     public LinkedList<Enemy> enemies;
+    public LinkedList<Explosion> explosions;
 
     public Level(SpriteBatch batcher, int number) {
         this.ship = new Ship(0, 0);
         this.batcher = batcher;
 
         initEnemies();
+
+        this.explosions = new LinkedList<Explosion>();
     }
 
     private float generateTimeToNextEnemy() {
@@ -36,6 +39,9 @@ public class Level {
         this.enemies = new LinkedList<Enemy>();
     }
 
+    public void addExplosion(Explosion explosion) {
+        this.explosions.add(explosion);
+    }
 
     public void update(float delta) {
         Enemy enemy;
@@ -66,6 +72,10 @@ public class Level {
 
         batcher.draw(Assets.shipRegion, ship.position.x, ship.position.y);
         ship.renderShots(batcher);
+
+        for (Explosion explosion : explosions) {
+            explosion.render(batcher);
+        }
 
         batcher.end();
     }
