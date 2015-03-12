@@ -45,6 +45,17 @@ public class Level {
 
     public void update(float delta) {
         Enemy enemy;
+        Explosion explosion;
+
+        for (int explosionIndex = explosions.size() - 1; explosionIndex >= 0; explosionIndex--) {
+            explosion = explosions.get(explosionIndex);
+            if (explosion.finished()) {
+                explosions.remove(explosionIndex);
+            } else {
+                explosion.update(delta);
+            }
+        }
+
         for (int enemyIndex = enemies.size() - 1; enemyIndex >= 0; enemyIndex--) {
             enemy = enemies.get(enemyIndex);
             if (enemy.killed()) {

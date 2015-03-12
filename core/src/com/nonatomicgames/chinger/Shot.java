@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public interface Shot {
 
-    public static final int MAXIMUM_SHOTS_ON_SCREEN = 6;
-
     public void shoot(float spawnX, float spawnY);
 
     public boolean onScreen();

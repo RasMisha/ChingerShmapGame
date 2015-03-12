@@ -10,6 +10,42 @@ import java.util.Random;
  */
 public class TimerBombEnemy implements Enemy {
 
+    public static class TimerBombEnemyExplosion implements Explosion {
+
+        private float lifeTime;
+        private boolean finished;
+        private Vector2 position;
+
+        public TimerBombEnemyExplosion(float x, float y) {
+            this.lifeTime = 0f;
+            this.finished = false;
+
+            this.position = new Vector2(x, y);
+        }
+
+        @Override
+        public void update(float delta) {
+            lifeTime += delta;
+            finished = Assets.timerBombExplosionAnimation.isAnimationFinished(lifeTime);
+        }
+
+        @Override
+        public void render(SpriteBatch batcher) {
+            batcher.draw(
+                    Assets.timerBombExplosionAnimation.getKeyFrame(lifeTime, false),
+                    this.position.x,
+                    this.position.y,
+                    24,
+                    24
+            );
+        }
+
+        @Override
+        public boolean finished() {
+            return this.finished;
+        }
+    }
+
     private static final float UPDATING_TIME = 0.02f;
 
     public static Random rnd = new Random();
@@ -48,7 +84,7 @@ public class TimerBombEnemy implements Enemy {
         }
 
         if (killed) {
-            // create enemy shots on field
+            level.addExplosion(new TimerBombEnemyExplosion(this.position.x, this.position.y));
         } else {
             if (this.lifeTime >= UPDATING_TIME) {
                 this.lifeTime -= UPDATING_TIME;

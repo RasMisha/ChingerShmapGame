@@ -9,4 +9,8 @@ public interface Explosion {
 
     public void render(SpriteBatch batcher);
 
+    public void update(float delta);
+
+    public boolean finished();
+
 }
