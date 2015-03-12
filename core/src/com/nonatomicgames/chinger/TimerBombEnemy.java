@@ -32,9 +32,9 @@ public class TimerBombEnemy implements Enemy {
 
         y = Math.min(y, Constants.WORLD_HEIGHT - this.height);
         this.position = new Vector2(Constants.WORLD_WIDTH, y);
-        this.direction = new Vector2(-3, 0);
+        this.direction = new Vector2(-2, 0);
 
-        this.ttl = 3 + rnd.nextInt(3); // range from 3 to 5
+        this.ttl = 2 + rnd.nextFloat(); // range from 2 to 3
         this.lifeTime = 0f;
         this.killed = false;
     }
