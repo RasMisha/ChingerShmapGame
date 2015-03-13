@@ -86,10 +86,8 @@ public class TimerBombEnemy implements Enemy {
         if (killed) {
             level.addExplosion(new TimerBombEnemyExplosion(this.position.x, this.position.y));
         } else {
-            if (this.lifeTime >= UPDATING_TIME) {
-                this.lifeTime -= UPDATING_TIME;
-                this.position.add(this.direction);
-            }
+            this.direction = new Vector2(-2,0);
+            this.position.add(direction.scl(delta /UPDATING_TIME));
         }
     }
 
