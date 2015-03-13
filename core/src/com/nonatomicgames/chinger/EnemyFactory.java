@@ -10,7 +10,7 @@ public class EnemyFactory {
     private static Random rnd = new Random();
 
     public static Enemy getTimerBombEnemy(Level level) {
-        return getTimerBombEnemy(level, rnd.nextInt(Constants.WORLD_HEIGHT));
+        return getTimerBombEnemy(level, rnd.nextFloat()*Constants.WORLD_HEIGHT);
     }
 
     public static Enemy getTimerBombEnemy(Level level, float y) {
