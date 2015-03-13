@@ -35,6 +35,12 @@ public class SimpleShot implements Shot {
         this.enemyShot = enemyShot;
     }
 
+    public SimpleShot(Vector2 normalizedVector, boolean enemyShot) {
+        this.wasShoted = true;
+        this.direction = normalizedVector.scl(VELOCITY);
+        this.enemyShot = enemyShot;
+    }
+
 
     @Override
     public void shoot(float spawnX, float spawnY) {

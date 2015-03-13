@@ -15,7 +15,7 @@ public class Level {
     public float lastTimeOfCreatingEnemy = 0f;
     public float nextEnemyIn = 0f;
 
-    private Ship ship;
+    public Ship ship;
     private SpriteBatch batcher;
 
     public LinkedList<Enemy> enemies;
@@ -33,7 +33,7 @@ public class Level {
     }
 
     private float generateTimeToNextEnemy() {
-        return 3 + rnd.nextInt(4);
+        return 2;// + rnd.nextInt(4);
     }
 
     private void initEnemies() {
@@ -83,7 +83,11 @@ public class Level {
 
         this.lastTimeOfCreatingEnemy += delta;
         if (this.lastTimeOfCreatingEnemy > this.nextEnemyIn) {
-            this.enemies.add(EnemyFactory.getTimerBombEnemy(this));
+            if (rnd.nextInt() % 2 == 1) {
+                this.enemies.add(EnemyFactory.getTimerBombEnemy(this));
+            } else {
+                this.enemies.add(EnemyFactory.getSinEnemy(this));
+            }
             this.lastTimeOfCreatingEnemy = 0f;
         }
 
@@ -110,5 +114,6 @@ public class Level {
 
         batcher.end();
     }
+
 
 }
