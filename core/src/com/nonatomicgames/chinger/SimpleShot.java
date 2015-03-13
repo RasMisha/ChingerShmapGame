@@ -12,15 +12,27 @@ public class SimpleShot implements Shot {
     private static final float UPDATING_TIME = 0.02f;
 
     public boolean wasShoted = false;
+    public boolean enemyShot = false;
 
     public Vector2 position = new Vector2();
-    public Vector2 delta = new Vector2();
+    public Vector2 direction = new Vector2();
 
     private float lifeTime = 0f;
 
 
     public SimpleShot() {
-        wasShoted = false;
+        this(0f, false);
+    }
+
+    public SimpleShot(float angle) {
+        this(angle, false);
+    }
+
+    public SimpleShot(float angle, boolean enemyShot) {
+        this.wasShoted = true;
+        this.direction = new Vector2(VELOCITY, 0);
+        this.direction.rotate(angle);
+        this.enemyShot = enemyShot;
     }
 
 
@@ -51,11 +63,9 @@ public class SimpleShot implements Shot {
 
     @Override
     public void update(float delta) {
-        lifeTime += delta;
-        if (lifeTime >= UPDATING_TIME) {
-            this.position.x += VELOCITY;
-            this.lifeTime -= UPDATING_TIME;
-        }
+        float scalar = delta / UPDATING_TIME;
+        Vector2 curDir = new Vector2(direction.x, direction.y).scl(scalar);
+        position.add(curDir);
     }
 
     @Override
@@ -65,7 +75,7 @@ public class SimpleShot implements Shot {
 
     @Override
     public boolean enemyShot() {
-        return false;
+        return this.enemyShot;
     }
 
 }

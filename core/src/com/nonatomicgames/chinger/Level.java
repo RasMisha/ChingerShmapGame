@@ -20,6 +20,7 @@ public class Level {
 
     public LinkedList<Enemy> enemies;
     public LinkedList<Explosion> explosions;
+    public LinkedList<Shot> shots;
 
     public Level(SpriteBatch batcher, int number) {
         this.ship = new Ship(0, 0);
@@ -28,6 +29,7 @@ public class Level {
         initEnemies();
 
         this.explosions = new LinkedList<Explosion>();
+        this.shots = new LinkedList<Shot>();
     }
 
     private float generateTimeToNextEnemy() {
@@ -43,9 +45,14 @@ public class Level {
         this.explosions.add(explosion);
     }
 
+    public void addShot(Shot shot) {
+        this.shots.add(shot);
+    }
+
     public void update(float delta) {
         Enemy enemy;
         Explosion explosion;
+        Shot shot;
 
         for (int explosionIndex = explosions.size() - 1; explosionIndex >= 0; explosionIndex--) {
             explosion = explosions.get(explosionIndex);
@@ -62,6 +69,15 @@ public class Level {
                 enemies.remove(enemyIndex);
             } else {
                 enemy.update(delta);
+            }
+        }
+
+        for (int shotIndex = shots.size() - 1; shotIndex >= 0; shotIndex--) {
+            shot = shots.get(shotIndex);
+            if (shot.onScreen()) {
+                shot.update(delta);
+            } else {
+                shots.remove(shotIndex);
             }
         }
 
@@ -83,6 +99,10 @@ public class Level {
 
         batcher.draw(Assets.shipRegion, ship.position.x, ship.position.y);
         ship.renderShots(batcher);
+
+        for (Shot shot : shots) {
+            shot.render(batcher);
+        }
 
         for (Explosion explosion : explosions) {
             explosion.render(batcher);

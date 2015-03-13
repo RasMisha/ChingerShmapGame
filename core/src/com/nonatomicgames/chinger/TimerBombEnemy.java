@@ -85,6 +85,12 @@ public class TimerBombEnemy implements Enemy {
 
         if (killed) {
             level.addExplosion(new TimerBombEnemyExplosion(this.position.x, this.position.y));
+            Shot shot;
+            for (int shotAngle = 0; shotAngle < 360; shotAngle += 30) {
+                shot = new SimpleShot(shotAngle, true);
+                shot.shoot(this.position.x + width / 2, this.position.y + height / 2);
+                level.addShot(shot);
+            }
         } else {
             this.direction = new Vector2(-2,0);
             this.position.add(direction.scl(delta /UPDATING_TIME));
