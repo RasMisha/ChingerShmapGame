@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public class Ship {
 
-    public static final float SHOT_PAUSE = 0.5f;
+    public static final float SHOT_PAUSE = 0.2f;
     public static final Random rnd = new Random();
 
     public static final int LEFT_DIRECTION = 0;
