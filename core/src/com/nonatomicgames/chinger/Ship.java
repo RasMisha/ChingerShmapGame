@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public class Ship {
 
-    public static final float SHOT_PAUSE = 0.1f;
+    public static final float SHOT_PAUSE = 0.5f;
     public static final Random rnd = new Random();
 
     public static final int LEFT_DIRECTION = 0;
@@ -34,7 +34,7 @@ public class Ship {
 
     private float time = 0f;
 
-    public int currentSpeed = 2;
+    public int currentSpeed = 0;
     public float[] speedTickValues = new float[]{0.04f, 0.03f, 0.02f};
 
     public Rectangle bounds = new Rectangle();
@@ -95,12 +95,6 @@ public class Ship {
             this.timeFromLastShot = 0f;
             this.shots.add(nextShot);
         }
-
-        /*time += delta;
-        if (time > speedTickValues[currentSpeed]) {
-            time -= speedTickValues[currentSpeed];
-            this.position.add(velocity);
-        }*/
 
         this.position.add(velocity.scl(delta/speedTickValues[currentSpeed]));
     }
