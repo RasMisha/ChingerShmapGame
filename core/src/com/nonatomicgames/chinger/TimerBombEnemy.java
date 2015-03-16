@@ -115,7 +115,10 @@ public class TimerBombEnemy implements Enemy {
 
     private void addNextShot() {
         int nextIndex = ((lastShotIndex + 1) % shotDirections.length);
-        Shot newShot = new SimpleShot(shotDirections[nextIndex], true);
+        Shot newShot = new SimpleShot(
+                new Vector2(shotDirections[nextIndex].x , shotDirections[nextIndex].y),
+                true
+        );
         newShot.shoot(position.x, position.y + height/2);
         level.addShot(newShot);
     }
