@@ -47,6 +47,12 @@ public class TimerBombEnemy implements Enemy {
     }
 
     private static final float UPDATING_TIME = 0.02f;
+    private static final float SHOT_FREQ = 1f;
+    private static final Vector2[] shotDirections = new Vector2[] {
+            new Vector2(-1,0).rotate(45),
+            new Vector2(-1,0),
+            new Vector2(-1,0).rotate(-45)
+    };
 
     public static Random rnd = new Random();
 
@@ -59,6 +65,9 @@ public class TimerBombEnemy implements Enemy {
     public float ttl;
     public float lifeTime;
     public boolean killed;
+    private float lastShotIn;
+    private int lastShotIndex = 0;
+
 
     public TimerBombEnemy(Level level, float y) {
         this.level = level;
@@ -73,6 +82,7 @@ public class TimerBombEnemy implements Enemy {
         this.ttl = 3 + rnd.nextFloat() * 2f; // range from 2 to 3
         this.lifeTime = 0f;
         this.killed = false;
+        this.lastShotIn = 0f;
     }
 
     @Override
@@ -94,7 +104,20 @@ public class TimerBombEnemy implements Enemy {
         } else {
             this.direction = new Vector2(-1f, 0);
             this.position.add(direction.scl(delta /UPDATING_TIME));
+
+            lastShotIn += delta;
+            if (lastShotIn >= SHOT_FREQ) {
+                lastShotIn -= SHOT_FREQ;
+                addNextShot();
+            }
         }
+    }
+
+    private void addNextShot() {
+        int nextIndex = ((lastShotIndex + 1) % shotDirections.length);
+        Shot newShot = new SimpleShot(shotDirections[nextIndex], true);
+        newShot.shoot(position.x, position.y + height/2);
+        level.addShot(newShot);
     }
 
     @Override
