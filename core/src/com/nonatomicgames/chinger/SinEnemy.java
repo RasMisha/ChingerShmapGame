@@ -42,9 +42,9 @@ public class SinEnemy implements Enemy {
         lastShot += delta;
         if (lastShot >= SHOT_FREQ && level.ship.position.x < position.x) {
             lastShot -= SHOT_FREQ;
-            Vector2 direction = new Vector2(level.ship.position.x, level.ship.position.y).sub(position.x, position.y).nor();
-            Shot newShot = new SimpleShot(direction, true);
-            newShot.shoot(position.x, position.y + Assets.enemyRegion.getRegionHeight());
+            Vector2 shotDirection = new Vector2(level.ship.position.x, level.ship.position.y).sub(position.x, position.y).nor();
+            Shot newShot = new SimpleShot(shotDirection, true);
+            newShot.shoot(position.x, position.y + Assets.enemyRegion.getRegionHeight()/2);
             level.addShot(newShot);
         }
     }
@@ -56,6 +56,6 @@ public class SinEnemy implements Enemy {
 
     @Override
     public boolean killed() {
-        return false;
+        return this.killed;
     }
 }
