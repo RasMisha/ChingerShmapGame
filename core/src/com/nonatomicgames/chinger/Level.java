@@ -98,6 +98,7 @@ public class Level {
                 }
                 case 3: {
                     this.enemies.add(EnemyFactory.getDownDiagonalEnemy(this));
+                    break;
                 }
             }
             this.lastTimeOfCreatingEnemy = 0f;

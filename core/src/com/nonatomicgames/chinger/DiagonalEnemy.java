@@ -44,7 +44,6 @@ public class DiagonalEnemy implements Enemy {
 
         lastShotIn+=delta;
         if (lastShotIn >= SHOT_FREQ) {
-            System.err.println("DIAGONAL_SHOT");
             lastShotIn -= SHOT_FREQ;
             addNextShot();
         }
