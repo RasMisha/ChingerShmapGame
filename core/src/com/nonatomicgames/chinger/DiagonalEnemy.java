@@ -8,9 +8,9 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class DiagonalEnemy implements Enemy {
 
-    public static final float VELOCITY = 4;
+    public static final float VELOCITY = 2;
     public static final float UPDATING_TIME = 0.02f;
-    private static final float SHOT_FREQ = 1f;
+    private static final float SHOT_FREQ = 0.5f;
 
     public static final int UP_DIRECTION = 0;
     public static final int DOWN_DIRECTION = 1;
@@ -39,16 +39,25 @@ public class DiagonalEnemy implements Enemy {
 
     @Override
     public void update(float delta) {
-        Vector2 currentDelta = new Vector2(velocity.x, velocity.y).nor().scl(delta/UPDATING_TIME);
+        Vector2 currentDelta = new Vector2(velocity.x, velocity.y).scl(delta / UPDATING_TIME);
         this.position.add(currentDelta);
 
         lastShotIn+=delta;
         if (lastShotIn >= SHOT_FREQ) {
+            System.err.println("DIAGONAL_SHOT");
             lastShotIn -= SHOT_FREQ;
-            Vector2 shotDirection = new Vector2(level.ship.position.x, level.ship.position.y).sub(position.x, position.y).nor();
-            Shot newShot = new SimpleShot(shotDirection, true);;
-            newShot.shoot(position.x, position.y + Assets.enemyRegion.getRegionHeight()/2);
+            addNextShot();
         }
+    }
+
+    private void addNextShot() {
+        Vector2 shotDirection =
+                new Vector2(level.ship.position.x, level.ship.position.y)
+                        .sub(position.x, position.y)
+                        .nor();
+        Shot newShot = new SimpleShot(shotDirection, true);
+        newShot.shoot(position.x, position.y + Assets.enemyRegion.getRegionHeight()/2);
+        level.addShot(newShot);
     }
 
     @Override

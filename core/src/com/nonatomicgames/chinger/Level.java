@@ -33,7 +33,7 @@ public class Level {
     }
 
     private float generateTimeToNextEnemy() {
-        return 2;// + rnd.nextInt(4);
+        return 0.5f;// + rnd.nextInt(4);
     }
 
     private void initEnemies() {
@@ -83,10 +83,22 @@ public class Level {
 
         this.lastTimeOfCreatingEnemy += delta;
         if (this.lastTimeOfCreatingEnemy > this.nextEnemyIn) {
-            if (rnd.nextInt() % 2 == 1) {
-                this.enemies.add(EnemyFactory.getTimerBombEnemy(this));
-            } else {
-                this.enemies.add(EnemyFactory.getSinEnemy(this));
+            switch (rnd.nextInt()%4) {
+                case 0: {
+                    this.enemies.add(EnemyFactory.getTimerBombEnemy(this));
+                    break;
+                }
+                case 1: {
+                    this.enemies.add(EnemyFactory.getSinEnemy(this));
+                    break;
+                }
+                case 2: {
+                    this.enemies.add(EnemyFactory.getUpDiagonalEnemy(this));
+                    break;
+                }
+                case 3: {
+                    this.enemies.add(EnemyFactory.getDownDiagonalEnemy(this));
+                }
             }
             this.lastTimeOfCreatingEnemy = 0f;
         }
