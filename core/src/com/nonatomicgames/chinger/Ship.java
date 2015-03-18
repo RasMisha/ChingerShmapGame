@@ -29,7 +29,6 @@ public class Ship {
     private float timeFromLastShot = 0f;
 
     private int currentDirection;
-    private Shot[] currentShots;
     public LinkedList<Shot> shots = new LinkedList<Shot>();
 
     private float time = 0f;
@@ -39,7 +38,9 @@ public class Ship {
 
     public Rectangle bounds = new Rectangle();
 
-    public Ship(float x, float y) {
+    private Level level;
+
+    public Ship(Level level, float x, float y) {
         this.position.x = x;
         this.position.y = y;
 
@@ -92,18 +93,13 @@ public class Ship {
             }
 
             nextShot.shoot(this.position.x + 24, this.position.y + 12);
-            this.timeFromLastShot = 0f;
-            this.shots.add(nextShot);
+            timeFromLastShot = 0f;
+            level.shots.add(nextShot);
         }
 
         this.position.add(velocity.scl(delta/speedTickValues[currentSpeed]));
     }
 
     public void renderShots(SpriteBatch batcher) {
-        for (Shot shot : shots) {
-            if (shot.onScreen()) {
-                shot.render(batcher);
-            }
-        }
     }
 }

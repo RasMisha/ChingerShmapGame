@@ -23,7 +23,7 @@ public class Level {
     public LinkedList<Shot> shots;
 
     public Level(SpriteBatch batcher, int number) {
-        this.ship = new Ship(0, 0);
+        this.ship = new Ship(this, 0, 0);
         this.batcher = batcher;
 
         initEnemies();
