@@ -41,6 +41,8 @@ public class Ship {
     private Level level;
 
     public Ship(Level level, float x, float y) {
+        this.level = level;
+
         this.position.x = x;
         this.position.y = y;
 
