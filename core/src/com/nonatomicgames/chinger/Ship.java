@@ -17,10 +17,10 @@ public class Ship {
     public static final float SHOT_PAUSE = 0.2f;
     public static final Random rnd = new Random();
 
-    public static final int LEFT_DIRECTION = 0;
-    public static final int RIGHT_DIRECTION = 1;
-    public static final int DOWN_DIRECTION = 2;
-    public static final int UP_DIRECTION = 3;
+    public static final int LEFT_DIRECTION = 1;
+    public static final int RIGHT_DIRECTION = 2;
+    public static final int DOWN_DIRECTION = 4;
+    public static final int UP_DIRECTION = 8;
 
     public Vector2 position = new Vector2();
 
@@ -54,27 +54,30 @@ public class Ship {
 
     public void update(float delta) {
 
-        this.velocity.x = 0;
-        this.velocity.y = 0;
-        this.timeFromLastShot += delta;
+        velocity.x = 0;
+        velocity.y = 0;
+        timeFromLastShot += delta;
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            currentDirection = LEFT_DIRECTION;
-            this.velocity.x = -2;
-            this.velocity.y = 0;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            currentDirection = RIGHT_DIRECTION;
-            this.velocity.x = 2;
-            this.velocity.y = 0;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            currentDirection = DOWN_DIRECTION;
-            this.velocity.x = 0;
-            this.velocity.y = -2;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            currentDirection = UP_DIRECTION;
-            this.velocity.x = 0;
-            this.velocity.y = 2;
+        int previousDirection = currentDirection;
+        currentDirection = 0;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !((RIGHT_DIRECTION & previousDirection) > 0)) {
+            currentDirection |= LEFT_DIRECTION;
+            velocity.x = -2;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !((LEFT_DIRECTION & previousDirection)>0)) {
+            currentDirection |= RIGHT_DIRECTION;
+            velocity.x = 2;
         }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && !((UP_DIRECTION & previousDirection)>0)) {
+            currentDirection |= DOWN_DIRECTION;
+            velocity.y = -2;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.UP) && !((DOWN_DIRECTION & previousDirection)>0)) {
+            currentDirection |= UP_DIRECTION;
+            velocity.y = 2;
+        }
+
+        velocity.nor();
 
         for (int shotIndex = shots.size() - 1; shotIndex >= 0; shotIndex--) {
             Shot shot = shots.get(shotIndex);
