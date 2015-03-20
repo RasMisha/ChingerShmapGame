@@ -31,9 +31,7 @@ public class Ship {
     private int currentDirection;
     public LinkedList<Shot> shots = new LinkedList<Shot>();
 
-    private float time = 0f;
-
-    public int currentSpeed = 0;
+    public int currentSpeed = 2;
     public float[] speedTickValues = new float[]{0.04f, 0.03f, 0.02f};
 
     public Rectangle bounds = new Rectangle();
@@ -63,21 +61,21 @@ public class Ship {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !((RIGHT_DIRECTION & previousDirection) > 0)) {
             currentDirection |= LEFT_DIRECTION;
-            velocity.x = -2;
+            velocity.x = -1;
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !((LEFT_DIRECTION & previousDirection)>0)) {
             currentDirection |= RIGHT_DIRECTION;
-            velocity.x = 2;
+            velocity.x = 1;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && !((UP_DIRECTION & previousDirection)>0)) {
             currentDirection |= DOWN_DIRECTION;
-            velocity.y = -2;
+            velocity.y = -1;
         } else if (Gdx.input.isKeyPressed(Input.Keys.UP) && !((DOWN_DIRECTION & previousDirection)>0)) {
             currentDirection |= UP_DIRECTION;
-            velocity.y = 2;
+            velocity.y = 1;
         }
 
-        velocity.nor();
+        velocity.nor().scl(2);
 
         for (int shotIndex = shots.size() - 1; shotIndex >= 0; shotIndex--) {
             Shot shot = shots.get(shotIndex);
