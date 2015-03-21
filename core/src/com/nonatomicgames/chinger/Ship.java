@@ -54,7 +54,8 @@ public class Ship {
 
         this.timeFromLastShot = 0f;
 
-        this.weapon = new SimpleWeapon(level, this);
+        //this.weapon = new SimpleWeapon(level, this);
+        this.weapon = new SpreadWeapon(level, this);
     }
 
     public void update(float delta) {

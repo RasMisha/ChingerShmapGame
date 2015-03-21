@@ -9,4 +9,8 @@ public interface Weapon {
 
     public void shoot();
 
+    public void found();
+
+    public void lost();
+
 }

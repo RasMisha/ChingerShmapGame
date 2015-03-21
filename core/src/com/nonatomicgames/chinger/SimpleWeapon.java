@@ -30,4 +30,12 @@ public class SimpleWeapon implements Weapon {
         newShot.shoot(ship.position.x + 24, ship.position.y + 12);
         level.shots.add(newShot);
     }
+
+    @Override
+    public void found() {
+    }
+
+    @Override
+    public void lost() {
+    }
 }
