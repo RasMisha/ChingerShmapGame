@@ -22,6 +22,9 @@ public class Ship {
     public static final int DOWN_DIRECTION = 4;
     public static final int UP_DIRECTION = 8;
 
+    public float centerX = 12f, centerY = 12f;
+    public float boundRadius = 7;
+
     public Vector2 position = new Vector2();
 
     private Vector2 velocity = new Vector2();
@@ -38,6 +41,8 @@ public class Ship {
 
     private Level level;
 
+    private Weapon weapon;
+
     public Ship(Level level, float x, float y) {
         this.level = level;
 
@@ -48,6 +53,8 @@ public class Ship {
         this.velocity.y = 0;
 
         this.timeFromLastShot = 0f;
+
+        this.weapon = new SimpleWeapon(level, this);
     }
 
     public void update(float delta) {
@@ -88,16 +95,8 @@ public class Ship {
 
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && timeFromLastShot >= SHOT_PAUSE) {
-            Shot nextShot = null;
-            if (rnd.nextBoolean()) {
-                nextShot = new SpreadShot();
-            } else {
-                nextShot = new SimpleShot();
-            }
-
-            nextShot.shoot(this.position.x + 24, this.position.y + 12);
+            weapon.shoot();
             timeFromLastShot = 0f;
-            level.shots.add(nextShot);
         }
 
         this.position.add(velocity.scl(delta/speedTickValues[currentSpeed]));
