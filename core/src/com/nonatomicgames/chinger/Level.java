@@ -18,17 +18,15 @@ public class Level {
 
     public Ship ship;
     private SpriteBatch batcher;
-    private ShapeRenderer shapeRenderer;
 
     public LinkedList<Enemy> enemies;
     public LinkedList<Explosion> explosions;
     public LinkedList<Shot> shots;
     public Shot superShot;
 
-    public Level(SpriteBatch batcher, ShapeRenderer shapeRenderer, int number) {
+    public Level(SpriteBatch batcher, int number) {
         this.ship = new Ship(this, 0, 0);
         this.batcher = batcher;
-        this.shapeRenderer = shapeRenderer;
 
         initEnemies();
 

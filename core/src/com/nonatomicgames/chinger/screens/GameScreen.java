@@ -20,14 +20,12 @@ public class GameScreen implements Screen {
     private Level currentLevel;
     private FPSLogger fpsLogger;
     private SpriteBatch batcher;
-    private ShapeRenderer shapeRenderer;
 
     private OrthographicCamera orthographicCamera;
 
     public GameScreen(ChingerGame game, SpriteBatch batcher) {
         this.game = game;
         this.batcher = batcher;
-        this.shapeRenderer = new ShapeRenderer();
         initCamera();
     }
 
@@ -38,7 +36,7 @@ public class GameScreen implements Screen {
     }
 
     public void show() {
-        currentLevel = new Level(batcher, shapeRenderer, 1);
+        currentLevel = new Level(batcher, 1);
         fpsLogger = new FPSLogger();
     }
 
