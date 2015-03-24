@@ -78,6 +78,12 @@ public class Level {
             }
         }
 
+        if (superShot == null || !superShot.onScreen()) {
+            superShot = null;
+        } else {
+            superShot.update(delta);
+        }
+
         for (int shotIndex = shots.size() - 1; shotIndex >= 0; shotIndex--) {
             shot = shots.get(shotIndex);
             if (shot.onScreen()) {
@@ -122,15 +128,9 @@ public class Level {
             enemy.render(batcher);
         }
 
-        superShot.render(batcher);
-
-//        batcher.draw(
-//                Assets.laserRegion,
-//                ship.position.x + ship.width,
-//                ship.position.y + ship.height/2 - 4,
-//                Constants.WORLD_WIDTH - ship.position.x + ship.width,
-//                8
-//        );
+        if (superShot != null) {
+            superShot.render(batcher);
+        }
 
         batcher.draw(Assets.shipRegion, ship.position.x, ship.position.y);
 

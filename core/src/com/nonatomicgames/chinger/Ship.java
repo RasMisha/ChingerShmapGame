@@ -31,8 +31,8 @@ public class Ship {
 
     private Vector2 velocity = new Vector2();
 
-    private float timeFromLastShot = 0f;
-    private float timeFromLastSuperShot = 0f;
+    private float timeFromLastShot = SHOT_PAUSE;
+    private float timeFromLastSuperShot = SUPER_SHOT_PAUSE;
 
     private int currentDirection;
 
@@ -64,7 +64,7 @@ public class Ship {
 
         //this.weapon = new SimpleWeapon(level, this);
         this.weapon = new SpreadWeapon(level, this);
-        //this.superWeapon = new Imp
+        this.superWeapon = new ImpulseWeapon(level, this);
     }
 
     public void update(float delta) {
@@ -72,6 +72,7 @@ public class Ship {
         velocity.x = 0;
         velocity.y = 0;
         timeFromLastShot += delta;
+        timeFromLastSuperShot += delta;
 
         int previousDirection = currentDirection;
         currentDirection = 0;

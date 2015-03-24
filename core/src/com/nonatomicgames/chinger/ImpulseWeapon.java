@@ -12,7 +12,8 @@ public class ImpulseWeapon implements Weapon {
 
     public ImpulseWeapon(Level level, Ship ship) {
         this.level = level;
-        this.numberOfBullets = 0;
+        this.ship = ship;
+        this.numberOfBullets = 3;
     }
 
     @Override
@@ -22,6 +23,12 @@ public class ImpulseWeapon implements Weapon {
 
     @Override
     public void shoot() {
+        if (numberOfBullets > 0) {
+            numberOfBullets--;
+            Shot newShot = new ImpulseShot(ship);
+            newShot.shoot(0f,0f);
+            level.addSuperShot(newShot);
+        }
     }
 
     @Override
