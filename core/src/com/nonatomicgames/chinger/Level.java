@@ -1,6 +1,7 @@
 package com.nonatomicgames.chinger;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.LinkedList;
 import java.util.Random;
@@ -17,14 +18,17 @@ public class Level {
 
     public Ship ship;
     private SpriteBatch batcher;
+    private ShapeRenderer shapeRenderer;
 
     public LinkedList<Enemy> enemies;
     public LinkedList<Explosion> explosions;
     public LinkedList<Shot> shots;
+    public Shot superShot;
 
-    public Level(SpriteBatch batcher, int number) {
+    public Level(SpriteBatch batcher, ShapeRenderer shapeRenderer, int number) {
         this.ship = new Ship(this, 0, 0);
         this.batcher = batcher;
+        this.shapeRenderer = shapeRenderer;
 
         initEnemies();
 
@@ -33,7 +37,7 @@ public class Level {
     }
 
     private float generateTimeToNextEnemy() {
-        return 0.5f;// + rnd.nextInt(4);
+        return 0.2f;// + rnd.nextInt(4);
     }
 
     private void initEnemies() {
@@ -48,6 +52,8 @@ public class Level {
     public void addShot(Shot shot) {
         this.shots.add(shot);
     }
+
+    public void addSuperShot(Shot shot) { this.superShot = shot; }
 
     public void update(float delta) {
         Enemy enemy;
@@ -108,14 +114,25 @@ public class Level {
     }
 
     public void render() {
+
+
         batcher.begin();
 
         for (Enemy enemy : enemies) {
             enemy.render(batcher);
         }
 
+        superShot.render(batcher);
+
+//        batcher.draw(
+//                Assets.laserRegion,
+//                ship.position.x + ship.width,
+//                ship.position.y + ship.height/2 - 4,
+//                Constants.WORLD_WIDTH - ship.position.x + ship.width,
+//                8
+//        );
+
         batcher.draw(Assets.shipRegion, ship.position.x, ship.position.y);
-        ship.renderShots(batcher);
 
         for (Shot shot : shots) {
             shot.render(batcher);

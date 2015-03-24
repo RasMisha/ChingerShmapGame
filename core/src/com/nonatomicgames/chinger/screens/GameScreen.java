@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.nonatomicgames.chinger.ChingerGame;
 import com.nonatomicgames.chinger.Constants;
 import com.nonatomicgames.chinger.Level;
@@ -19,13 +20,14 @@ public class GameScreen implements Screen {
     private Level currentLevel;
     private FPSLogger fpsLogger;
     private SpriteBatch batcher;
+    private ShapeRenderer shapeRenderer;
 
     private OrthographicCamera orthographicCamera;
 
     public GameScreen(ChingerGame game, SpriteBatch batcher) {
         this.game = game;
         this.batcher = batcher;
-
+        this.shapeRenderer = new ShapeRenderer();
         initCamera();
     }
 
@@ -36,7 +38,7 @@ public class GameScreen implements Screen {
     }
 
     public void show() {
-        currentLevel = new Level(batcher, 1);
+        currentLevel = new Level(batcher, shapeRenderer, 1);
         fpsLogger = new FPSLogger();
     }
 
