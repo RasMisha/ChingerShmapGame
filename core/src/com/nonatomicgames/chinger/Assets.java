@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import javax.xml.soap.Text;
+
 /**
  * Created by MandM on 05.03.2015.
  */
@@ -15,10 +17,12 @@ public class Assets {
     private static Texture shipTexture;
     private static Texture bulletTexure;
     private static Texture spritesSheet;
+    private static Texture laserTexture;
 
     public static TextureRegion shipRegion;
     public static TextureRegion simpleShotRegion;
     public static TextureRegion enemyRegion;
+    public static TextureRegion laserRegion;
 
     public static Animation timerBombExplosionAnimation;
 
@@ -31,11 +35,14 @@ public class Assets {
         shipTexture = loadTexture("ship.png");
         bulletTexure = loadTexture("bullet.png");
         spritesSheet = loadTexture("ship_sheet.png");
+        laserTexture = loadTexture("laser.png");
 
         shipRegion = new TextureRegion(shipTexture, 0, 0, 24, 24);
         simpleShotRegion = new TextureRegion(bulletTexure, 0, 0, 4, 4);
         enemyRegion = new TextureRegion(shipTexture, 0, 0, 24, 24);
         enemyRegion.flip(true, false);
+
+        laserRegion = new TextureRegion(laserTexture, 0,0,1,8);
 
         timerBombExplosionAnimation = new Animation(
                 0.05f,

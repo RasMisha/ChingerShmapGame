@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.nonatomicgames.chinger.ChingerGame;
 import com.nonatomicgames.chinger.Constants;
 import com.nonatomicgames.chinger.Level;
@@ -25,7 +26,6 @@ public class GameScreen implements Screen {
     public GameScreen(ChingerGame game, SpriteBatch batcher) {
         this.game = game;
         this.batcher = batcher;
-
         initCamera();
     }
 

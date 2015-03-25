@@ -15,6 +15,8 @@ import java.util.Random;
 public class Ship {
 
     public static final float SHOT_PAUSE = 0.2f;
+    public static final float SUPER_SHOT_PAUSE = 5f;
+
     public static final Random rnd = new Random();
 
     public static final int LEFT_DIRECTION = 1;
@@ -29,10 +31,10 @@ public class Ship {
 
     private Vector2 velocity = new Vector2();
 
-    private float timeFromLastShot = 0f;
+    private float timeFromLastShot = SHOT_PAUSE;
+    private float timeFromLastSuperShot = SUPER_SHOT_PAUSE;
 
     private int currentDirection;
-    public LinkedList<Shot> shots = new LinkedList<Shot>();
 
     public int currentSpeed = 2;
     public float[] speedTickValues = new float[]{0.04f, 0.03f, 0.02f};
@@ -42,6 +44,9 @@ public class Ship {
     private Level level;
 
     private Weapon weapon;
+    private Weapon superWeapon;
+
+    public float width, height;
 
     public Ship(Level level, float x, float y) {
         this.level = level;
@@ -54,8 +59,12 @@ public class Ship {
 
         this.timeFromLastShot = 0f;
 
+        this.width = Assets.shipRegion.getRegionWidth();
+        this.height = Assets.shipRegion.getRegionHeight();
+
         //this.weapon = new SimpleWeapon(level, this);
         this.weapon = new SpreadWeapon(level, this);
+        this.superWeapon = new ImpulseWeapon(level, this);
     }
 
     public void update(float delta) {
@@ -63,6 +72,7 @@ public class Ship {
         velocity.x = 0;
         velocity.y = 0;
         timeFromLastShot += delta;
+        timeFromLastSuperShot += delta;
 
         int previousDirection = currentDirection;
         currentDirection = 0;
@@ -85,24 +95,18 @@ public class Ship {
 
         velocity.nor().scl(2);
 
-        for (int shotIndex = shots.size() - 1; shotIndex >= 0; shotIndex--) {
-            Shot shot = shots.get(shotIndex);
-            if (shot.onScreen()) {
-                shot.update(delta);
-            } else {
-                shots.remove(shotIndex);
-            }
-        }
-
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && timeFromLastShot >= SHOT_PAUSE) {
             weapon.shoot();
             timeFromLastShot = 0f;
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && timeFromLastSuperShot >= SUPER_SHOT_PAUSE) {
+            superWeapon.shoot();
+            timeFromLastSuperShot = 0f;
+        }
+
         this.position.add(velocity.scl(delta/speedTickValues[currentSpeed]));
     }
 
-    public void renderShots(SpriteBatch batcher) {
-    }
 }
